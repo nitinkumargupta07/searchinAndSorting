@@ -1,6 +1,13 @@
-package com.gupta.nitin.revench;
+package com.gupta.nitin.search;
 
+/**
+ * @author nitin
+ * worst case complexity of linear search is O(n)
+ * best case complexity of linear search is O(1)
+ *  best case complexity of linear search is (n+1)/2
+ */
 public class LinearSearch {
+	
 
 	private static int linerSearch(int[] arr, int searchKey) {
 		int size = arr.length;
