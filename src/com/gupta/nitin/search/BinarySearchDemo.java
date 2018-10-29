@@ -27,55 +27,50 @@ package com.gupta.nitin.search;
  */
 public class BinarySearchDemo {
 
-	public static int recursiveBinarySearch(int[] sortedArray, int start, int end, int key) {
-
-		if (start < end) {
-			int mid = start + (end - start) / 2;
-			if (key < sortedArray[mid]) {
-				return recursiveBinarySearch(sortedArray, start, mid, key);
-
-			} else if (key > sortedArray[mid]) {
-				return recursiveBinarySearch(sortedArray, mid + 1, end, key);
-
-			} else {
-				return mid;
-			}
-		}
-		return -(start + 1);
+	public static void main(String[] args) {
+		int[] array = { 1, 2, 4, 6, 8, 12, 15, 34, 55, 77 };
+		System.out.println("12 find in position " + recursiveBinarySearch(array, 0, array.length - 1, 12));
+		System.out.println("20 find in position " + recursiveBinarySearch(array, 0, array.length - 1, 20));
+		System.out.println("12 find in position " + iterativeBinarySearch(array, 12));
+		System.out.println("12 find in position " + iterativeBinarySearch(array, 13));
 	}
 
-	private int iterativeBinarySearch(int[] inputArr, int key) {
-		int start = 0;
-		int end = inputArr.length - 1;
-		while (start <= end) {
-			int mid = (start + end) / 2;
-			if (key == inputArr[mid]) {
-				return mid;
-			} else if (key < inputArr[mid]) {
+	private static int iterativeBinarySearch(int[] array, int key) {
+		int begin = 0;
+		int end = array.length - 1;
+		int mid = 0;
+		while (begin <= end) {
+			mid = (begin + end) / 2;
+			if (array[mid] == key) {
+				mid = mid;
+				break;
+			}
+			if (array[mid] > key) {
 				end = mid - 1;
 			} else {
-				start = mid + 1;
+				begin = mid + 1;
+			}
+		}
+		if (begin > end) {
+			return -1;
+		} else {
+			return mid;
+		}
+
+	}
+
+	private static int recursiveBinarySearch(int[] array, int begin, int end, int searchKey) {
+		if (begin <= end) {
+			int mid = (begin + end) / 2;
+			if (array[mid] > searchKey) {
+				return recursiveBinarySearch(array, begin, mid - 1, searchKey);
+			} else if (array[mid] == searchKey) {
+				return mid;
+			} else {
+				return recursiveBinarySearch(array, mid + 1, end, searchKey);
 			}
 
 		}
 		return -1;
-
-	}
-
-	public static void main(String[] args) {
-		BinarySearchDemo demo = new BinarySearchDemo();
-		int[] arr = { 2, 4, 6, 8, 10, 12, 14, 16 };
-		System.out.println("Key 14's position: " + demo.iterativeBinarySearch(arr, 14));
-		int[] arr12 = { 6, 34, 78, 123, 432, 900 };
-		System.out.println("Key 432's position: " + demo.iterativeBinarySearch(arr12, 432));
-
-		int[] arr1 = { 2, 45, 234, 567, 876, 900, 976, 999 };
-		int index = recursiveBinarySearch(arr1, 0, arr1.length, 45);
-		System.out.println("Found 45 at " + index + " index");
-		index = recursiveBinarySearch(arr1, 0, arr1.length, 999);
-		System.out.println("Found 999 at " + index + " index");
-		index = recursiveBinarySearch(arr1, 0, arr1.length, 890);
-		System.out.println("Found 876 at " + index + " index");
-
 	}
 }
