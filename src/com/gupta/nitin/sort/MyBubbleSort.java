@@ -10,60 +10,94 @@ public class MyBubbleSort {
 		/// selectonSort(arr);
 		/// insertionSort(arr);
 		/// quickSort(arr ,0, arr.length - 1);
-		MyBubbleSort sort=new MyBubbleSort();
-		sort.sort( arr);
+		MyBubbleSort sort = new MyBubbleSort();
+		sort.sort(arr);
 		for (int i = 0; i < arr.length; i++) {
 			System.out.println(arr[i]);
 		}
 	}
 
 	public void sort(int inputArr[]) {
-     //   this.arr = inputArr;
-        int length = inputArr.length;
-        this.tempMergArr = new int[length];
-        doMergeSort(0, length - 1);
-    }
- 
-    private void doMergeSort(int lowerIndex, int higherIndex) {
-         
-        if (lowerIndex < higherIndex) {
-            int middle = lowerIndex + (higherIndex - lowerIndex) / 2;
-            // Below step sorts the left side of the arr
-            doMergeSort(lowerIndex, middle);
-            // Below step sorts the right side of the arr
-            doMergeSort(middle + 1, higherIndex);
-            // Now merge both sides
-            mergeParts(lowerIndex, middle, higherIndex);
-        }
-    }
- 
-    private void mergeParts(int lowerIndex, int middle, int higherIndex) {
- 
-        for (int i = lowerIndex; i <= higherIndex; i++) {
-            tempMergArr[i] = arr[i];
-        }
-        int i = lowerIndex;
-        int j = middle + 1;
-        int k = lowerIndex;
-        while (i <= middle && j <= higherIndex) {
-            if (tempMergArr[i] <= tempMergArr[j]) {
-                arr[k] = tempMergArr[i];
-                i++;
-            } else {
-                arr[k] = tempMergArr[j];
-                j++;
-            }
-            k++;
-        }
-        while (i <= middle) {
-            arr[k] = tempMergArr[i];
-            k++;
-            i++;
-        }
- 
-    }
-	
-	
+		// this.arr = inputArr;
+		int length = inputArr.length;
+		this.tempMergArr = new int[length];
+		doMergeSort(0, length - 1);
+	}
+
+	private void doMergeSort(int lowerIndex, int higherIndex) {
+
+		if (lowerIndex < higherIndex) {
+			int middle = lowerIndex + (higherIndex - lowerIndex) / 2;
+			// Below step sorts the left side of the arr
+			doMergeSort(lowerIndex, middle);
+			// Below step sorts the right side of the arr
+			doMergeSort(middle + 1, higherIndex);
+			// Now merge both sides
+			mergeParts(lowerIndex, middle, higherIndex);
+		}
+	}
+
+	private void mergeParts(int lowerIndex, int middle, int higherIndex) {
+
+		for (int i = lowerIndex; i <= higherIndex; i++) {
+			tempMergArr[i] = arr[i];
+		}
+		int i = lowerIndex;
+		int j = middle + 1;
+		int k = lowerIndex;
+		while (i <= middle && j <= higherIndex) {
+			if (tempMergArr[i] <= tempMergArr[j]) {
+				arr[k] = tempMergArr[i];
+				i++;
+			} else {
+				arr[k] = tempMergArr[j];
+				j++;
+			}
+			k++;
+		}
+		while (i <= middle) {
+			arr[k] = tempMergArr[i];
+			k++;
+			i++;
+		}
+	}
+
+	public static void recursiveQuickSort(int[] array, int startIdx, int endIdx) {
+		int idx = partition(array, startIdx, endIdx);
+		// Recursively call quicksort with left part of the partitioned array
+		if (startIdx < idx - 1) {
+			recursiveQuickSort(array, startIdx, idx - 1);
+		}
+		// Recursively call quick sort with right part of the partitioned array
+		if (endIdx > idx) {
+			recursiveQuickSort(array, idx, endIdx);
+		}
+	}
+
+	public static int partition(int[] array, int left, int right) {
+		int pivot = array[left]; // taking first element as pivot
+		while (left <= right) {
+			// searching number which is greater than pivot, bottom up
+			while (array[left] < pivot) {
+				left++;
+			}
+			// searching number which is less than pivot, top down
+			while (array[right] > pivot) {
+				right--;
+			}
+			// swap the values
+			if (left <= right) {
+				int tmp = array[left];
+				array[left] = array[right];
+				array[right] = tmp;
+				// increment left index and decrement right index
+				left++;
+				right--;
+			}
+		}
+		return left;
+	}
+
 	/** Quick sort function **/
 	public static void quickSort(int arr[], int low, int high) {
 		int i = low, j = high;
