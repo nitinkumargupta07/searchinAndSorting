@@ -6,18 +6,86 @@ public class SortDemo {
 
 	public static void main(String[] args) {
 
-		/// bubbleSort(arr);
-		/// selectonSort(arr);
-		/// insertionSort(arr);
-		/// quickSort(arr ,0, arr.length - 1);
+		bubbleSort(arr);
+		selectonSort(arr);
+		bubbleSort(arr, arr.length);
+		insertionSort(arr);
+		quickSort(arr, 0, arr.length - 1);
 		SortDemo sort = new SortDemo();
-		sort.sort(arr);
+		sort.mergesort(arr);
+		mergeSort(arr, 0, arr.length - 1);
 		for (int i = 0; i < arr.length; i++) {
 			System.out.println(arr[i]);
 		}
 	}
 
-	public void sort(int inputArr[]) {
+	private static void mergeSort(int[] arrayLinear2, int begin, int end) {
+		if (begin < end) {
+			int mid = (begin + end) / 2;
+			mergeSort(arrayLinear2, begin, mid);
+			mergeSort(arrayLinear2, mid + 1, end);
+			merge(arrayLinear2, begin, mid, end);
+		}
+	}
+
+	private static void merge(int[] array, int l, int m, int r) {
+		int n1 = m - l + 1;
+		int n2 = r - m;
+		/* Create temp arrays */
+		int L[] = new int[n1];
+		int R[] = new int[n2];
+		/* Copy data to temp arrays */
+		for (int i = 0; i < n1; ++i)
+			L[i] = array[l + i];
+		for (int j = 0; j < n2; ++j)
+			R[j] = array[m + 1 + j];
+		/* Merge the temp arrays */
+		// Initial indexes of first and second subarrays
+		int i = 0, j = 0;
+		// Initial index of merged subarry array
+		int k = l;
+		while (i < n1 && j < n2) {
+			if (L[i] <= R[j]) {
+				array[k] = L[i];
+				i++;
+			} else {
+				array[k] = R[j];
+				j++;
+			}
+			k++;
+		}
+
+		/* Copy remaining elements of L[] if any */
+		while (i < n1) {
+			array[k] = L[i];
+			i++;
+			k++;
+		}
+
+		/* Copy remaining elements of R[] if any */
+		while (j < n2) {
+			array[k] = R[j];
+			j++;
+			k++;
+		}
+
+	}
+
+	private static void insertionSortRecursive(int[] array, int n) {
+		if (n <= 1)
+			return;
+		insertionSortRecursive(array, n - 1);
+		int last = array[n - 1];
+		int j = n - 2;
+		while (j >= 0 && array[j] > last) {
+			array[j + 1] = array[j];
+			j--;
+		}
+		array[j + 1] = last;
+
+	}
+
+	public void mergesort(int inputArr[]) {
 		// this.arr = inputArr;
 		int length = inputArr.length;
 		this.tempMergArr = new int[length];
@@ -167,6 +235,18 @@ public class SortDemo {
 				}
 			}
 		}
+	}
+
+	static void bubbleSort(int array[], int n) {
+		if (n == 1)
+			return;
+		for (int i = 0; i < n - 1; i++)
+			if (array[i] > array[i + 1]) {
+				int temp = array[i];
+				array[i] = array[i + 1];
+				array[i + 1] = temp;
+			}
+		bubbleSort(array, n - 1);
 	}
 
 }

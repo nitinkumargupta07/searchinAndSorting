@@ -26,16 +26,75 @@ package com.gupta.nitin.search;
  *
  */
 public class SearchDemo {
-
+	static int[] array = { 1, 2, 4, 6, 8, 12, 15, 34, 55, 77 };
+	static int[] arrayLinear = { 111, 21, 13, 41, 68, 8, 12, 15, 34, 55, 77 };
 	public static void main(String[] args) {
-		int[] array = { 1, 2, 4, 6, 8, 12, 15, 34, 55, 77 };
-		int[] arrayLinear = { 111, 21, 13, 41, 68, 8, 12, 15, 34, 55, 77 };
+		
 		System.out.println("12 find in position " + recursiveBinarySearch(array, 0, array.length - 1, 12));
 		System.out.println("20 find in position " + recursiveBinarySearch(array, 0, array.length - 1, 20));
 		System.out.println("12 find in position " + iterativeBinarySearch(array, 12));
 		System.out.println("12 find in position " + iterativeBinarySearch(array, 13));
 		System.out.println("21 position -->> " + resursiveLinearSearch(arrayLinear, 0, arrayLinear.length - 1, 115));
 		System.out.println("16 position -->> " + resursiveLinearSearch(arrayLinear, 0, arrayLinear.length - 1, 16));
+		System.out.println("16 position -->> " + jumpSearch(array,15));
+		linerSearch(arrayLinear, 13);
+	}
+	
+	static int interpolationSearch(int x) {
+		int lo = 0, hi = (array.length - 1);
+		// Since array is sorted, an element present
+		// in array must be in range defined by corner
+		while (lo <= hi && x >= array[lo] && x <= array[hi]) {
+			// Probing the position with keeping
+			// uniform distribution in mind.
+			int pos = lo + (((hi - lo) / (array[hi] - array[lo])) * (x - array[lo]));
+
+			// Condition of target found
+			if (array[pos] == x)
+				return pos;
+
+			// If x is larger, x is in upper part
+			if (array[pos] < x)
+				lo = pos + 1;
+
+			// If x is smaller, x is in the lower part
+			else
+				hi = pos - 1;
+		}
+		return -1;
+	}
+	
+	public static int jumpSearch(int[] array, int x) {
+		int n = array.length;
+		// Finding block size to be jumped
+		int step = (int) Math.floor(Math.sqrt(n));
+
+		// Finding the block where element is
+		// present (if it is present)
+		int prev = 0;
+		while (array[Math.min(step, n) - 1] < x) {
+			prev = step;
+			step += (int) Math.floor(Math.sqrt(n));
+			if (prev >= n)
+				return -1;
+		}
+
+		// Doing a linear search for x in block
+		// beginning with prev.
+		while (array[prev] < x) {
+			prev++;
+
+			// If we reached next block or end of
+			// array, element is not present.
+			if (prev == Math.min(step, n))
+				return -1;
+		}
+
+		// If element is found
+		if (array[prev] == x)
+			return prev;
+
+		return -1;
 	}
 
 	private static int resursiveLinearSearch(int[] array2, int i, int j, int key) {
