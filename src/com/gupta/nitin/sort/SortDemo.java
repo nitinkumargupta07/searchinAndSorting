@@ -1,6 +1,6 @@
 package com.gupta.nitin.sort;
 
-public class MyBubbleSort {
+public class SortDemo {
 	static int[] arr = { 12, 22, 42, 6, 34, 76, 23, 98, 45 };
 	static private int[] tempMergArr;
 
@@ -10,7 +10,7 @@ public class MyBubbleSort {
 		/// selectonSort(arr);
 		/// insertionSort(arr);
 		/// quickSort(arr ,0, arr.length - 1);
-		MyBubbleSort sort = new MyBubbleSort();
+		SortDemo sort = new SortDemo();
 		sort.sort(arr);
 		for (int i = 0; i < arr.length; i++) {
 			System.out.println(arr[i]);
