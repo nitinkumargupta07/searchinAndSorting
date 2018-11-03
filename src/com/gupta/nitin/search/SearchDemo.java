@@ -25,14 +25,43 @@ package com.gupta.nitin.search;
  * @author nitin
  *
  */
-public class BinarySearchDemo {
+public class SearchDemo {
 
 	public static void main(String[] args) {
 		int[] array = { 1, 2, 4, 6, 8, 12, 15, 34, 55, 77 };
+		int[] arrayLinear = { 111, 21, 13, 41, 68, 8, 12, 15, 34, 55, 77 };
 		System.out.println("12 find in position " + recursiveBinarySearch(array, 0, array.length - 1, 12));
 		System.out.println("20 find in position " + recursiveBinarySearch(array, 0, array.length - 1, 20));
 		System.out.println("12 find in position " + iterativeBinarySearch(array, 12));
 		System.out.println("12 find in position " + iterativeBinarySearch(array, 13));
+		System.out.println("21 position -->> " + resursiveLinearSearch(arrayLinear, 0, arrayLinear.length - 1, 115));
+		System.out.println("16 position -->> " + resursiveLinearSearch(arrayLinear, 0, arrayLinear.length - 1, 16));
+	}
+
+	private static int resursiveLinearSearch(int[] array2, int i, int j, int key) {
+		int position = -1;
+		if (i < j) {
+
+			if (array2[i] == key) {
+				position = i;
+				return position;
+			} else {
+				i++;
+				return resursiveLinearSearch(array2, i, j, key);
+			}
+		}
+
+		return position;
+	}
+
+	private static int linerSearch(int[] arr, int searchKey) {
+		int size = arr.length;
+		for (int i = 0; i < size; i++) {
+			if (arr[i] == searchKey) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	private static int iterativeBinarySearch(int[] array, int key) {
